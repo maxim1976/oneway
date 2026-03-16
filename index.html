@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Way Coffee — 單行道咖啡 — 花蓮</title>
+  <meta name="description" content="花蓮最有個性的咖啡館 · Hualien's most soulful coffee · 花蓮で一番個性的なカフェ" />
+
+  <!-- Google Fonts: Playfair Display + Noto Serif TC (CJK) + Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'charcoal':   '#1a1a1a',
+            'charcoal2':  '#222222',
+            'charcoal3':  '#2d2d2d',
+            'accent':     '#c8a96e',
+            'accent-dim': '#a8894e',
+            'cream':      '#f0ece4',
+            'cream-dim':  '#b8b4ac',
+            'red':        '#c0392b',
+            'red-dim':    '#922b21',
+            'wood':       '#8b6f47',
+            'wood-dim':   '#6b4f27',
+          },
+          fontFamily: {
+            serif:    ['"Playfair Display"', '"Noto Serif TC"', 'Georgia', 'serif'],
+            sans:     ['"Noto Sans TC"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            'widest2': '0.25em',
+            'widest3': '0.4em',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #1a1a1a;
+      color: #f0ece4;
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ── Language visibility ── */
+    [data-lang] { display: none; }
+    body[data-active-lang="zh"] [data-lang="zh"] { display: block; }
+    body[data-active-lang="en"] [data-lang="en"] { display: block; }
+    body[data-active-lang="jp"] [data-lang="jp"] { display: block; }
+
+    /* inline spans */
+    span[data-lang] { display: none; }
+    body[data-active-lang="zh"] span[data-lang="zh"] { display: inline; }
+    body[data-active-lang="en"] span[data-lang="en"] { display: inline; }
+    body[data-active-lang="jp"] span[data-lang="jp"] { display: inline; }
+
+    /* ── Navbar ── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(26, 26, 26, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200, 169, 110, 0.15);
+    }
+
+    /* ── Lang switcher ── */
+    .lang-btn {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: #b8b4ac;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 0.25rem 0.6rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .lang-btn:hover { color: #c8a96e; }
+    .lang-btn.active {
+      color: #c8a96e;
+      border-color: rgba(200, 169, 110, 0.5);
+    }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Animated coffee ring / circle motif */
+    .hero-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(200, 169, 110, 0.12);
+      animation: pulse-ring 8s ease-in-out infinite;
+    }
+    .hero-circle:nth-child(2) { animation-delay: -2s; }
+    .hero-circle:nth-child(3) { animation-delay: -4s; }
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1);   opacity: 0.5; }
+      50%       { transform: scale(1.04); opacity: 1;   }
+    }
+
+    /* Diagonal red stripe accent */
+    .hero-stripe {
+      position: absolute;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #c0392b 30%, #c0392b 70%, transparent);
+      opacity: 0.6;
+      transform: rotate(-15deg) translateX(-50%);
+    }
+
+    /* Hero text fade-in */
+    .hero-content > * {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.2s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.45s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.65s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.85s; }
+    .hero-content > *:nth-child(5) { animation-delay: 1.0s; }
+    @keyframes fade-up {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #c8a96e;
+      font-weight: 400;
+    }
+
+    /* ── Divider ── */
+    .accent-line {
+      width: 48px;
+      height: 2px;
+      background: #c8a96e;
+      display: block;
+    }
+
+    /* ── Menu cards ── */
+    .menu-card {
+      background: #222222;
+      border: 1px solid rgba(200, 169, 110, 0.1);
+      border-radius: 2px;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200,169,110,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .menu-card:hover {
+      border-color: rgba(200, 169, 110, 0.4);
+      transform: translateY(-2px);
+    }
+    .menu-card-category {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c0392b;
+      font-weight: 500;
+    }
+    .menu-price {
+      font-family: 'Playfair Display', serif;
+      color: #c8a96e;
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (min-width: 768px) {
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: #2d2d2d;
+      aspect-ratio: 1 / 1;
+    }
+    .gallery-item.tall {
+      aspect-ratio: auto;
+      grid-row: span 2;
+    }
+    .gallery-item.wide {
+      grid-column: span 2;
+      aspect-ratio: 2 / 1;
+    }
+    @media (max-width: 767px) {
+      .gallery-item.wide { grid-column: span 1; aspect-ratio: 1 / 1; }
+      .gallery-item.tall { aspect-ratio: 1 / 1; grid-row: span 1; }
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* Gallery hover overlay */
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,26,26,0.7);
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c8a96e;
+    }
+
+    /* ── Menu photo cards ── */
+    .menu-photo-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(200,169,110,0.15);
+    }
+    .menu-photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .menu-photo-card:hover img { transform: scale(1.04); }
+    .menu-photo-card .menu-photo-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(to top, rgba(26,26,26,0.9), transparent);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c8a96e;
+    }
+
+    /* ── About section ── */
+    .about-quote {
+      border-left: 3px solid #c0392b;
+      padding-left: 1.5rem;
+    }
+
+    /* Red calligraphy banner (decorative) */
+    .calli-banner {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #c0392b;
+      background: #1a1a1a;
+      border: 1px solid #c0392b;
+      padding: 1rem 0.5rem;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ── About photo composition ── */
+    .about-photos {
+      position: relative;
+      height: 420px;
+    }
+    .about-photo-main {
+      position: absolute;
+      top: 0; left: 0;
+      width: 75%;
+      height: 80%;
+      overflow: hidden;
+      border: 1px solid rgba(200,169,110,0.2);
+    }
+    .about-photo-accent {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 52%;
+      height: 54%;
+      overflow: hidden;
+      border: 1px solid rgba(200,169,110,0.2);
+      box-shadow: -8px -8px 0 rgba(192,57,43,0.25);
+    }
+    .about-photo-main img,
+    .about-photo-accent img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .about-photo-main:hover img,
+    .about-photo-accent:hover img { transform: scale(1.03); }
+
+    /* ── Roaster banner ── */
+    .roaster-banner {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+    }
+    @media (min-width: 768px) { .roaster-banner { height: 500px; } }
+    .roaster-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .roaster-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.4) 60%, rgba(26,26,26,0.1) 100%);
+      display: flex;
+      align-items: center;
+      padding: 3rem 4rem;
+    }
+    @media (max-width: 767px) {
+      .roaster-overlay { padding: 2rem; background: rgba(26,26,26,0.75); }
+    }
+
+    /* ── Contact ── */
+    .contact-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #8b6f47;
+      font-weight: 500;
+    }
+    .map-frame {
+      width: 100%;
+      height: 320px;
+      border: 1px solid rgba(200,169,110,0.15);
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(200,169,110,0.1);
+    }
+    .footer-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .footer-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.12;
+    }
+    footer > * { position: relative; z-index: 1; }
+
+    /* ── Scroll indicator ── */
+    .scroll-cue {
+      animation: bob 2.5s ease-in-out infinite;
+      opacity: 0;
+      animation-delay: 1.8s;
+      animation-fill-mode: forwards;
+    }
+    @keyframes bob {
+      0%   { transform: translateY(0);  opacity: 0.6; }
+      50%  { transform: translateY(8px); opacity: 1;   }
+      100% { transform: translateY(0);  opacity: 0.6; }
+    }
+
+    /* ── Nav links ── */
+    .nav-link {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #b8b4ac;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: #c8a96e; }
+
+    /* ── Horizontal rule style ── */
+    .hr-accent {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,169,110,0.3), transparent);
+    }
+
+    /* ── Logo image ── */
+    .nav-logo-img {
+      height: 40px;
+      width: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,110,0.35);
+      transition: border-color 0.3s;
+    }
+    .nav-logo-img:hover { border-color: rgba(200,169,110,0.8); }
+
+    /* ────────────────────────────────────────
+       LIGHTBOX
+    ──────────────────────────────────────── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(10,8,6,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      padding: 1.5rem;
+    }
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border: 1px solid rgba(200,169,110,0.2);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.95);
+    }
+    #lightbox.open #lightbox-img { transform: scale(1); }
+    #lightbox-close {
+      position: absolute;
+      top: 1.25rem; right: 1.5rem;
+      background: transparent;
+      border: 1px solid rgba(200,169,110,0.3);
+      color: #c8a96e;
+      font-size: 1.25rem;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    #lightbox-close:hover { background: rgba(200,169,110,0.1); border-color: #c8a96e; }
+    #lightbox-caption {
+      position: absolute;
+      bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c8a96e;
+      white-space: nowrap;
+    }
+    #lightbox-prev, #lightbox-next {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: transparent;
+      border: 1px solid rgba(200,169,110,0.25);
+      color: #c8a96e;
+      width: 44px; height: 44px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    #lightbox-prev { left: 1.25rem; }
+    #lightbox-next { right: 1.25rem; }
+    #lightbox-prev:hover, #lightbox-next:hover {
+      background: rgba(200,169,110,0.1);
+      border-color: #c8a96e;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body data-active-lang="zh">
+
+<!-- ════════════════════════════════════════
+     LIGHTBOX MODAL
+════════════════════════════════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button id="lightbox-close" aria-label="Close">&#x2715;</button>
+  <button id="lightbox-prev" aria-label="Previous">&#x2190;</button>
+  <img id="lightbox-img" src="" alt="" />
+  <button id="lightbox-next" aria-label="Next">&#x2192;</button>
+  <p id="lightbox-caption"></p>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav id="navbar" class="px-6 md:px-12 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-3 group">
+      <img src="assets/images/logo.jpg" alt="One Way Coffee" class="nav-logo-img" />
+      <div class="flex flex-col leading-none">
+        <span class="font-serif text-base font-bold tracking-widest text-cream group-hover:text-accent transition-colors duration-300">ONE WAY</span>
+        <span class="text-xs tracking-widest2 text-accent-dim">COFFEE</span>
+      </div>
+    </a>
+
+    <!-- Nav links (hidden on mobile) -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#menu" class="nav-link">
+        <span data-lang="zh">菜單</span>
+        <span data-lang="en">Menu</span>
+        <span data-lang="jp">メニュー</span>
+      </a>
+      <a href="#gallery" class="nav-link">
+        <span data-lang="zh">相簿</span>
+        <span data-lang="en">Gallery</span>
+        <span data-lang="jp">ギャラリー</span>
+      </a>
+      <a href="#about" class="nav-link">
+        <span data-lang="zh">關於我們</span>
+        <span data-lang="en">About</span>
+        <span data-lang="jp">私たちについて</span>
+      </a>
+      <a href="#contact" class="nav-link">
+        <span data-lang="zh">聯絡</span>
+        <span data-lang="en">Contact</span>
+        <span data-lang="jp">アクセス</span>
+      </a>
+    </div>
+
+    <!-- Language switcher -->
+    <div class="flex items-center gap-1 border border-white/10 px-2 py-1">
+      <button class="lang-btn active" data-lang-switch="zh">ZH</button>
+      <span class="text-white/20 text-xs">|</span>
+      <button class="lang-btn" data-lang-switch="en">EN</button>
+      <span class="text-white/20 text-xs">|</span>
+      <button class="lang-btn" data-lang-switch="jp">JP</button>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+
+  <!-- Background photo -->
+  <div class="absolute inset-0 bg-charcoal overflow-hidden">
+    <img
+      src="assets/images/background1.jpg"
+      alt=""
+      aria-hidden="true"
+      class="w-full h-full object-cover"
+      style="opacity:0.45; object-position: center center;"
+    />
+  </div>
+  <!-- Dark gradient overlay on top of photo -->
+  <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0.3) 50%, rgba(26,26,26,0.7) 100%);"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(139,111,71,0.08) 0%, transparent 70%);"></div>
+
+  <!-- Concentric rings -->
+  <div class="hero-circle" style="width:520px;height:520px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div class="hero-circle" style="width:760px;height:760px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div class="hero-circle" style="width:1020px;height:1020px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+  <!-- Red stripe accent (left side) -->
+  <div class="hero-stripe" style="left:8%;"></div>
+  <!-- Red stripe (right side) -->
+  <div class="hero-stripe" style="right:8%;left:auto;transform:rotate(15deg) translateX(50%);"></div>
+
+  <!-- Decorative calligraphy banners -->
+  <div class="absolute left-6 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 opacity-70">
+    <div class="calli-banner">單行道</div>
+  </div>
+  <div class="absolute right-6 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 opacity-70">
+    <div class="calli-banner">花蓮</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="hero-content relative z-10 text-center px-6 max-w-3xl mx-auto">
+
+    <!-- EN café name -->
+    <div class="mb-2">
+      <span class="section-label">Est. Hualien, Taiwan</span>
+    </div>
+
+    <!-- Primary wordmark -->
+    <h1 class="font-serif font-black leading-none mb-3" style="font-size: clamp(3rem, 10vw, 7rem); letter-spacing: -0.01em;">
+      ONE WAY<br/>
+      <span style="color:#c8a96e;">COFFEE</span>
+    </h1>
+
+    <!-- ZH / JP subtitle -->
+    <div class="mb-6 flex flex-col items-center gap-1">
+      <span class="font-serif text-xl md:text-2xl text-cream/70 tracking-widest" style="font-family:'Noto Serif TC',serif;">單行道咖啡</span>
+      <span class="text-sm text-cream/40 tracking-widest" style="font-family:'Noto Sans TC',sans-serif;">ワンウェイコーヒー</span>
+    </div>
+
+    <!-- Tagline -->
+    <div class="mb-10">
+      <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="zh">花蓮最有個性的咖啡館</p>
+      <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="en">Hualien's most soulful coffee</p>
+      <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="jp">花蓮で一番個性的なカフェ</p>
+    </div>
+
+    <!-- CTA -->
+    <a href="#menu" class="inline-block border border-accent/60 text-accent text-xs tracking-widest3 uppercase px-8 py-3 hover:bg-accent hover:text-charcoal transition-all duration-300">
+      <span data-lang="zh">探索菜單</span>
+      <span data-lang="en">Explore Menu</span>
+      <span data-lang="jp">メニューを見る</span>
+    </a>
+
+    <!-- Scroll cue -->
+    <div class="mt-16 scroll-cue flex flex-col items-center gap-2">
+      <span class="text-accent/40 text-xs tracking-widest">SCROLL</span>
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none" class="text-accent/40">
+        <rect x="6" y="1" width="4" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="8" y1="15" x2="8" y2="23" stroke="currentColor" stroke-width="1.5"/>
+        <polyline points="4,19 8,23 12,19" stroke="currentColor" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     MENU
+════════════════════════════════════════ -->
+<section id="menu" class="py-24 px-6 md:px-12" style="background:#1c1c1c;">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <div class="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-4 reveal">
+      <div>
+        <p class="section-label mb-3">— 02</p>
+        <h2 class="font-serif font-bold leading-tight" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+          <span data-lang="zh">菜單</span>
+          <span data-lang="en">Our Menu</span>
+          <span data-lang="jp">メニュー</span>
+        </h2>
+        <span class="accent-line mt-3"></span>
+      </div>
+      <p class="text-cream-dim text-sm max-w-xs">
+        <span data-lang="zh">精選台灣在地豆源與歐洲風味甜點</span>
+        <span data-lang="en">Local Taiwanese beans &amp; European-inspired pastries</span>
+        <span data-lang="jp">台湾産豆と欧風スイーツのこだわりセレクション</span>
+      </p>
+    </div>
+
+    <!-- ── ESPRESSO ── -->
+    <div class="mb-10 reveal">
+      <div class="flex items-center gap-4 mb-5">
+        <span class="text-red text-xs tracking-widest3 uppercase font-medium">
+          <span data-lang="zh">義式咖啡</span>
+          <span data-lang="en">Espresso Bar</span>
+          <span data-lang="jp">エスプレッソ</span>
+        </span>
+        <div class="flex-1 hr-accent"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Espresso</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">義式濃縮</span>
+            <span data-lang="en">Espresso</span>
+            <span data-lang="jp">エスプレッソ</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">Single / Double shot</p>
+          <p class="menu-price">NT$80 / 100</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Latte</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">拿鐵</span>
+            <span data-lang="en">Café Latte</span>
+            <span data-lang="jp">カフェラテ</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">鮮奶 · 雙份義式</span>
+            <span data-lang="en">Fresh milk · double shot</span>
+            <span data-lang="jp">フレッシュミルク · ダブルショット</span>
+          </p>
+          <p class="menu-price">NT$150</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Cappuccino</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">卡布奇諾</span>
+            <span data-lang="en">Cappuccino</span>
+            <span data-lang="jp">カプチーノ</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">乾式 / 濕式</span>
+            <span data-lang="en">Dry / Wet</span>
+            <span data-lang="jp">ドライ / ウェット</span>
+          </p>
+          <p class="menu-price">NT$140</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Flat White</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">馥列白</span>
+            <span data-lang="en">Flat White</span>
+            <span data-lang="jp">フラットホワイト</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">澳式風格</span>
+            <span data-lang="en">Australian style</span>
+            <span data-lang="jp">オーストラリアスタイル</span>
+          </p>
+          <p class="menu-price">NT$160</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SINGLE ORIGINS ── -->
+    <div class="mb-10 reveal">
+      <div class="flex items-center gap-4 mb-5">
+        <span class="text-red text-xs tracking-widest3 uppercase font-medium">
+          <span data-lang="zh">單品手沖</span>
+          <span data-lang="en">Single Origin</span>
+          <span data-lang="jp">シングルオリジン</span>
+        </span>
+        <div class="flex-1 hr-accent"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Ethiopia</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">衣索比亞 耶加雪菲</span>
+            <span data-lang="en">Ethiopia Yirgacheffe</span>
+            <span data-lang="jp">エチオピア イルガチェフェ</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">花香 · 茉莉 · 柑橘 · 水洗</span>
+            <span data-lang="en">Floral · jasmine · citrus · washed</span>
+            <span data-lang="jp">フローラル · ジャスミン · 柑橘 · ウォッシュド</span>
+          </p>
+          <p class="menu-price">NT$180</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Colombia</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">哥倫比亞 薇拉</span>
+            <span data-lang="en">Colombia Huila</span>
+            <span data-lang="jp">コロンビア ウイラ</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">紅糖 · 黑莓 · 奶油 · 蜜處理</span>
+            <span data-lang="en">Brown sugar · blackberry · honey process</span>
+            <span data-lang="jp">ブラウンシュガー · ブラックベリー · ハニー</span>
+          </p>
+          <p class="menu-price">NT$190</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Taiwan</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">阿里山 台灣豆</span>
+            <span data-lang="en">Alishan Taiwan</span>
+            <span data-lang="jp">阿里山 台湾豆</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">烏龍茶香 · 蜂蜜 · 龍眼</span>
+            <span data-lang="en">Oolong · honey · longan · washed</span>
+            <span data-lang="jp">烏龍茶香 · 蜂蜜 · リュウガン</span>
+          </p>
+          <p class="menu-price">NT$220</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── DESSERTS ── -->
+    <div class="mb-10 reveal">
+      <div class="flex items-center gap-4 mb-5">
+        <span class="text-red text-xs tracking-widest3 uppercase font-medium">
+          <span data-lang="zh">甜點</span>
+          <span data-lang="en">Desserts</span>
+          <span data-lang="jp">スイーツ</span>
+        </span>
+        <div class="flex-1 hr-accent"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Cake</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">每日蛋糕</span>
+            <span data-lang="en">Cake of the Day</span>
+            <span data-lang="jp">本日のケーキ</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">每日手作，依當日為準</span>
+            <span data-lang="en">Daily housemade, ask staff</span>
+            <span data-lang="jp">毎日手作り、スタッフにお尋ねください</span>
+          </p>
+          <p class="menu-price">NT$120</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Tart</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">法式水果塔</span>
+            <span data-lang="en">Fruit Tart</span>
+            <span data-lang="jp">フルーツタルト</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">季節水果 · 卡士達</span>
+            <span data-lang="en">Seasonal fruit · custard cream</span>
+            <span data-lang="jp">季節のフルーツ · カスタード</span>
+          </p>
+          <p class="menu-price">NT$130</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Toast</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">厚片吐司</span>
+            <span data-lang="en">Thick Toast</span>
+            <span data-lang="jp">厚切りトースト</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">奶油 · 海鹽花 · 自製果醬</span>
+            <span data-lang="en">Butter · fleur de sel · house jam</span>
+            <span data-lang="jp">バター · 岩塩 · 自家製ジャム</span>
+          </p>
+          <p class="menu-price">NT$110</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Waffle</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">比利時鬆餅</span>
+            <span data-lang="en">Belgian Waffle</span>
+            <span data-lang="jp">ベルギーワッフル</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">楓糖 · 鮮奶油 · 莓果</span>
+            <span data-lang="en">Maple syrup · cream · berries</span>
+            <span data-lang="jp">メープルシロップ · クリーム · ベリー</span>
+          </p>
+          <p class="menu-price">NT$150</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SOFT DRINKS ── -->
+    <div class="mb-16 reveal">
+      <div class="flex items-center gap-4 mb-5">
+        <span class="text-red text-xs tracking-widest3 uppercase font-medium">
+          <span data-lang="zh">飲品</span>
+          <span data-lang="en">Non-Coffee</span>
+          <span data-lang="jp">ソフトドリンク</span>
+        </span>
+        <div class="flex-1 hr-accent"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Tea</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">台灣烏龍茶</span>
+            <span data-lang="en">Taiwan Oolong</span>
+            <span data-lang="jp">台湾烏龍茶</span>
+          </h3>
+          <p class="menu-price">NT$120</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Lemonade</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">現榨檸檬氣泡</span>
+            <span data-lang="en">Fresh Lemon Soda</span>
+            <span data-lang="jp">フレッシュレモンソーダ</span>
+          </h3>
+          <p class="menu-price">NT$130</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Chocolate</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">比利時熱可可</span>
+            <span data-lang="en">Hot Chocolate</span>
+            <span data-lang="jp">ホットチョコレート</span>
+          </h3>
+          <p class="menu-price">NT$150</p>
+        </div>
+
+        <div class="menu-card p-5">
+          <p class="menu-card-category mb-2">Seasonal</p>
+          <h3 class="font-serif font-bold text-lg text-cream mb-1">
+            <span data-lang="zh">季節特飲</span>
+            <span data-lang="en">Seasonal Special</span>
+            <span data-lang="jp">季節のスペシャル</span>
+          </h3>
+          <p class="text-cream-dim text-xs mb-3">
+            <span data-lang="zh">洽詢店員</span>
+            <span data-lang="en">Ask our barista</span>
+            <span data-lang="jp">スタッフにお尋ねください</span>
+          </p>
+          <p class="menu-price">NT$140+</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── MENU PHOTOS ── -->
+    <div class="reveal">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="text-red text-xs tracking-widest3 uppercase font-medium">
+          <span data-lang="zh">菜單實拍</span>
+          <span data-lang="en">Menu Photos</span>
+          <span data-lang="jp">メニュー写真</span>
+        </span>
+        <div class="flex-1 hr-accent"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" style="height: 280px;">
+
+        <div
+          class="menu-photo-card"
+          data-lightbox-src="assets/images/classic_and_special_menu.jpg"
+          data-lightbox-caption-zh="經典與特選菜單"
+          data-lightbox-caption-en="Classic &amp; Special Menu"
+          data-lightbox-caption-jp="クラシック＆スペシャルメニュー"
+        >
+          <img src="assets/images/classic_and_special_menu.jpg" alt="Classic and Special Menu" loading="lazy" />
+          <div class="menu-photo-label">
+            <span data-lang="zh">經典與特選</span>
+            <span data-lang="en">Classic &amp; Special</span>
+            <span data-lang="jp">クラシック＆スペシャル</span>
+          </div>
+        </div>
+
+        <div
+          class="menu-photo-card"
+          data-lightbox-src="assets/images/single_origin_menu.jpg"
+          data-lightbox-caption-zh="單品手沖菜單"
+          data-lightbox-caption-en="Single Origin Menu"
+          data-lightbox-caption-jp="シングルオリジンメニュー"
+        >
+          <img src="assets/images/single_origin_menu.jpg" alt="Single Origin Menu" loading="lazy" />
+          <div class="menu-photo-label">
+            <span data-lang="zh">單品手沖</span>
+            <span data-lang="en">Single Origin</span>
+            <span data-lang="jp">シングルオリジン</span>
+          </div>
+        </div>
+
+        <div
+          class="menu-photo-card"
+          data-lightbox-src="assets/images/menu.jpg"
+          data-lightbox-caption-zh="完整菜單"
+          data-lightbox-caption-en="Full Menu"
+          data-lightbox-caption-jp="フルメニュー"
+        >
+          <img src="assets/images/menu.jpg" alt="Full Menu" loading="lazy" />
+          <div class="menu-photo-label">
+            <span data-lang="zh">完整菜單</span>
+            <span data-lang="en">Full Menu</span>
+            <span data-lang="jp">フルメニュー</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ROASTER BANNER
+════════════════════════════════════════ -->
+<section id="roaster" style="background:#111;">
+  <div class="roaster-banner">
+    <img src="assets/images/roaster_packs.jpg" alt="One Way Coffee Roaster Packs" loading="lazy" />
+    <div class="roaster-overlay">
+      <div class="max-w-md reveal">
+        <p class="section-label mb-4">— Specialty Roaster</p>
+        <h2 class="font-serif font-bold leading-tight mb-4" style="font-size: clamp(1.8rem, 4vw, 3rem);">
+          <span data-lang="zh">精品咖啡豆</span>
+          <span data-lang="en">Coffee Roaster Packs</span>
+          <span data-lang="jp">コーヒーロースターパック</span>
+        </h2>
+        <span class="accent-line mb-6"></span>
+        <p class="text-cream/70 text-sm leading-relaxed mb-6">
+          <span data-lang="zh">精心烘焙的單一產地咖啡豆，帶回家延續那杯咖啡的美好時光。</span>
+          <span data-lang="en">Carefully roasted single-origin beans — bring home the flavours you love.</span>
+          <span data-lang="jp">丁寧に焙煎したシングルオリジンの豆をご自宅でも。</span>
+        </p>
+        <a href="#contact" class="inline-block border border-accent/60 text-accent text-xs tracking-widest3 uppercase px-6 py-2.5 hover:bg-accent hover:text-charcoal transition-all duration-300">
+          <span data-lang="zh">洽詢購買</span>
+          <span data-lang="en">Enquire</span>
+          <span data-lang="jp">お問い合わせ</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     GALLERY
+════════════════════════════════════════ -->
+<section id="gallery" class="py-24 px-6 md:px-12 bg-charcoal">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-12 reveal">
+      <p class="section-label mb-3">— 03</p>
+      <h2 class="font-serif font-bold leading-tight" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        <span data-lang="zh">空間相簿</span>
+        <span data-lang="en">Gallery</span>
+        <span data-lang="jp">ギャラリー</span>
+      </h2>
+      <span class="accent-line mt-3"></span>
+    </div>
+
+    <!-- Gallery grid — 12 food/drink photos -->
+    <div class="gallery-grid">
+
+      <!-- Wide featured: latte -->
+      <div
+        class="gallery-item wide"
+        data-lightbox-src="assets/images/latte.jpg"
+        data-lightbox-caption-zh="拿鐵"
+        data-lightbox-caption-en="Latte"
+        data-lightbox-caption-jp="ラテ"
+      >
+        <img src="assets/images/latte.jpg" alt="Latte" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">拿鐵</span>
+            <span data-lang="en">Latte</span>
+            <span data-lang="jp">ラテ</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Matcha Basque -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/matcha_basque.jpg"
+        data-lightbox-caption-zh="抹茶巴斯克"
+        data-lightbox-caption-en="Matcha Basque"
+        data-lightbox-caption-jp="抹茶バスク"
+      >
+        <img src="assets/images/matcha_basque.jpg" alt="Matcha Basque" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">抹茶巴斯克</span>
+            <span data-lang="en">Matcha Basque</span>
+            <span data-lang="jp">抹茶バスク</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Strawberry Cake -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/strawberry_cake.jpg"
+        data-lightbox-caption-zh="草莓蛋糕"
+        data-lightbox-caption-en="Strawberry Cake"
+        data-lightbox-caption-jp="ストロベリーケーキ"
+      >
+        <img src="assets/images/strawberry_cake.jpg" alt="Strawberry Cake" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">草莓蛋糕</span>
+            <span data-lang="en">Strawberry Cake</span>
+            <span data-lang="jp">ストロベリーケーキ</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Cheesecake -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/cheesecake.jpg"
+        data-lightbox-caption-zh="起司蛋糕"
+        data-lightbox-caption-en="Cheesecake"
+        data-lightbox-caption-jp="チーズケーキ"
+      >
+        <img src="assets/images/cheesecake.jpg" alt="Cheesecake" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">起司蛋糕</span>
+            <span data-lang="en">Cheesecake</span>
+            <span data-lang="jp">チーズケーキ</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Blueberry Cheesecake -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/blueberry_cheesecake.jpg"
+        data-lightbox-caption-zh="藍莓起司蛋糕"
+        data-lightbox-caption-en="Blueberry Cheesecake"
+        data-lightbox-caption-jp="ブルーベリーチーズケーキ"
+      >
+        <img src="assets/images/blueberry_cheesecake.jpg" alt="Blueberry Cheesecake" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">藍莓起司蛋糕</span>
+            <span data-lang="en">Blueberry Cheesecake</span>
+            <span data-lang="jp">ブルーベリーチーズケーキ</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Lemon Tart -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/lemon_tart.jpg"
+        data-lightbox-caption-zh="檸檬塔"
+        data-lightbox-caption-en="Lemon Tart"
+        data-lightbox-caption-jp="レモンタルト"
+      >
+        <img src="assets/images/lemon_tart.jpg" alt="Lemon Tart" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">檸檬塔</span>
+            <span data-lang="en">Lemon Tart</span>
+            <span data-lang="jp">レモンタルト</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Chocolate -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/chocolate.jpg"
+        data-lightbox-caption-zh="巧克力"
+        data-lightbox-caption-en="Chocolate"
+        data-lightbox-caption-jp="チョコレート"
+      >
+        <img src="assets/images/chocolate.jpg" alt="Chocolate" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">巧克力</span>
+            <span data-lang="en">Chocolate</span>
+            <span data-lang="jp">チョコレート</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Cinnamon Roll — wide featured -->
+      <div
+        class="gallery-item wide"
+        data-lightbox-src="assets/images/cinnamon_roll.jpg"
+        data-lightbox-caption-zh="肉桂捲"
+        data-lightbox-caption-en="Cinnamon Roll"
+        data-lightbox-caption-jp="シナモンロール"
+      >
+        <img src="assets/images/cinnamon_roll.jpg" alt="Cinnamon Roll" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">肉桂捲</span>
+            <span data-lang="en">Cinnamon Roll</span>
+            <span data-lang="jp">シナモンロール</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Creamy -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/creamy.jpg"
+        data-lightbox-caption-zh="奶霜咖啡"
+        data-lightbox-caption-en="Creamy Coffee"
+        data-lightbox-caption-jp="クリーミーコーヒー"
+      >
+        <img src="assets/images/creamy.jpg" alt="Creamy Coffee" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">奶霜咖啡</span>
+            <span data-lang="en">Creamy Coffee</span>
+            <span data-lang="jp">クリーミーコーヒー</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Latte 2 -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/latte2.jpg"
+        data-lightbox-caption-zh="拿鐵特寫"
+        data-lightbox-caption-en="Latte Close-up"
+        data-lightbox-caption-jp="ラテ（クローズアップ）"
+      >
+        <img src="assets/images/latte2.jpg" alt="Latte Close-up" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">拿鐵特寫</span>
+            <span data-lang="en">Latte Close-up</span>
+            <span data-lang="jp">ラテ（クローズアップ）</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Brunch -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/brunch.jpg"
+        data-lightbox-caption-zh="早午餐"
+        data-lightbox-caption-en="Brunch"
+        data-lightbox-caption-jp="ブランチ"
+      >
+        <img src="assets/images/brunch.jpg" alt="Brunch" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">早午餐</span>
+            <span data-lang="en">Brunch</span>
+            <span data-lang="jp">ブランチ</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Coffee Time -->
+      <div
+        class="gallery-item"
+        data-lightbox-src="assets/images/coffee_time.jpg"
+        data-lightbox-caption-zh="咖啡時光"
+        data-lightbox-caption-en="Coffee Time"
+        data-lightbox-caption-jp="コーヒータイム"
+      >
+        <img src="assets/images/coffee_time.jpg" alt="Coffee Time" loading="lazy" />
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-label">
+            <span data-lang="zh">咖啡時光</span>
+            <span data-lang="en">Coffee Time</span>
+            <span data-lang="jp">コーヒータイム</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hint -->
+    <p class="mt-6 text-cream-dim text-xs tracking-widest text-center opacity-40">
+      <span data-lang="zh">— 點擊照片放大查看 —</span>
+      <span data-lang="en">— Click any photo to enlarge —</span>
+      <span data-lang="jp">— 写真をクリックして拡大 —</span>
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about" style="background:#1e1b17;" class="py-24 px-6 md:px-12 relative overflow-hidden">
+
+  <!-- Background texture: subtle diagonal lines -->
+  <div class="absolute inset-0 pointer-events-none" style="background-image: repeating-linear-gradient(135deg, rgba(200,169,110,0.03) 0px, rgba(200,169,110,0.03) 1px, transparent 1px, transparent 60px);"></div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Text side -->
+      <div class="reveal">
+        <p class="section-label mb-3">— 04</p>
+        <h2 class="font-serif font-bold leading-tight mb-6" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+          <span data-lang="zh">關於我們</span>
+          <span data-lang="en">Our Story</span>
+          <span data-lang="jp">私たちについて</span>
+        </h2>
+        <span class="accent-line mb-8"></span>
+
+        <div class="about-quote mb-8">
+          <p class="text-cream text-base leading-relaxed" data-lang="zh">
+            花蓮歐風網美咖啡廳，距離花蓮車站前站步行只要5分鐘。不僅好拍好打卡，甜點跟飲料更是老闆精心研究。還有四隻貓咪陪你一起下午茶，趕快來一探究竟吧！
+          </p>
+          <p class="text-cream text-base leading-relaxed" data-lang="en">
+            A European-style Instagram-worthy café just 5 minutes walk from Hualien Station. Thoughtfully crafted drinks and desserts — and four resident cats to keep you company at afternoon tea.
+          </p>
+          <p class="text-cream text-base leading-relaxed" data-lang="jp">
+            花蓮駅から徒歩わずか5分の欧風フォトジェニックカフェ。こだわりのスイーツとドリンク、そして4匹の看板猫があなたのティータイムをお迎えします。
+          </p>
+        </div>
+
+        <!-- Feature pills -->
+        <div class="flex flex-wrap gap-3">
+          <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
+            <span data-lang="zh">🐱 四隻店貓</span>
+            <span data-lang="en">🐱 4 House Cats</span>
+            <span data-lang="jp">🐱 看板猫 4匹</span>
+          </span>
+          <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
+            <span data-lang="zh">📍 車站步行5分鐘</span>
+            <span data-lang="en">📍 5 min from Station</span>
+            <span data-lang="jp">📍 駅から徒歩5分</span>
+          </span>
+          <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
+            <span data-lang="zh">☕ 精品咖啡</span>
+            <span data-lang="en">☕ Specialty Coffee</span>
+            <span data-lang="jp">☕ スペシャルティコーヒー</span>
+          </span>
+          <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
+            <span data-lang="zh">🌿 歐風氛圍</span>
+            <span data-lang="en">🌿 European Ambience</span>
+            <span data-lang="jp">🌿 欧風インテリア</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Photo composition -->
+      <div class="reveal">
+        <div class="about-photos">
+
+          <!-- Main photo: interior -->
+          <div
+            class="about-photo-main"
+            data-lightbox-src="assets/images/interior.jpg"
+            data-lightbox-caption-zh="店內空間"
+            data-lightbox-caption-en="Interior"
+            data-lightbox-caption-jp="店内"
+            style="cursor:pointer;"
+          >
+            <img src="assets/images/interior.jpg" alt="One Way Coffee Interior" loading="lazy" />
+          </div>
+
+          <!-- Accent photo: front window -->
+          <div
+            class="about-photo-accent"
+            data-lightbox-src="assets/images/front_window.jpg"
+            data-lightbox-caption-zh="門面"
+            data-lightbox-caption-en="Front Window"
+            data-lightbox-caption-jp="フロント"
+            style="cursor:pointer;"
+          >
+            <img src="assets/images/front_window.jpg" alt="One Way Coffee Front Window" loading="lazy" />
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CONTACT + MAP
+════════════════════════════════════════ -->
+<section id="contact" class="py-24 px-6 md:px-12 bg-charcoal">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-14 reveal">
+      <p class="section-label mb-3">— 05</p>
+      <h2 class="font-serif font-bold leading-tight" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        <span data-lang="zh">找到我們</span>
+        <span data-lang="en">Find Us</span>
+        <span data-lang="jp">アクセス</span>
+      </h2>
+      <span class="accent-line mt-3"></span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+      <!-- Info column -->
+      <div class="space-y-8 reveal">
+
+        <div>
+          <p class="contact-label mb-2">
+            <span data-lang="zh">地址</span>
+            <span data-lang="en">Address</span>
+            <span data-lang="jp">住所</span>
+          </p>
+          <p class="text-cream text-base">
+            <span data-lang="zh">970 花蓮市中山路 123 號</span>
+            <span data-lang="en">123 Zhongshan Road, Hualien City 970, Taiwan</span>
+            <span data-lang="jp">台湾花蓮市中山路123号 〒970</span>
+          </p>
+        </div>
+
+        <div class="h-px bg-accent/10"></div>
+
+        <div>
+          <p class="contact-label mb-3">
+            <span data-lang="zh">營業時間</span>
+            <span data-lang="en">Opening Hours</span>
+            <span data-lang="jp">営業時間</span>
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-cream-dim">
+                <span data-lang="zh">週一 — 週五</span>
+                <span data-lang="en">Mon — Fri</span>
+                <span data-lang="jp">月 — 金</span>
+              </span>
+              <span class="text-cream font-medium tracking-wide">10:00 — 20:00</span>
+            </div>
+            <div class="h-px bg-white/5"></div>
+            <div class="flex justify-between items-center">
+              <span class="text-cream-dim">
+                <span data-lang="zh">週六 — 週日</span>
+                <span data-lang="en">Sat — Sun</span>
+                <span data-lang="jp">土 — 日</span>
+              </span>
+              <span class="text-cream font-medium tracking-wide">09:00 — 21:00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px bg-accent/10"></div>
+
+        <div class="space-y-3">
+          <div>
+            <p class="contact-label mb-1">
+              <span data-lang="zh">電話</span>
+              <span data-lang="en">Phone</span>
+              <span data-lang="jp">電話</span>
+            </p>
+            <a href="tel:+88630000000" class="text-cream hover:text-accent transition-colors text-base">+886-3-000-0000</a>
+          </div>
+          <div>
+            <p class="contact-label mb-1">Email</p>
+            <a href="mailto:hello@onewaycoffee.tw" class="text-cream hover:text-accent transition-colors text-base">hello@onewaycoffee.tw</a>
+          </div>
+        </div>
+
+        <!-- Social placeholder links -->
+        <div class="flex gap-4 pt-2">
+          <a href="#" class="text-xs tracking-widest text-cream-dim border-b border-cream-dim/30 hover:text-accent hover:border-accent transition-colors pb-0.5">Instagram</a>
+          <a href="#" class="text-xs tracking-widest text-cream-dim border-b border-cream-dim/30 hover:text-accent hover:border-accent transition-colors pb-0.5">Facebook</a>
+        </div>
+
+      </div>
+
+      <!-- Map column -->
+      <div class="reveal">
+        <!-- Replace src with real embed URL -->
+        <iframe
+          class="w-full h-80 border border-accent/15"
+          style="filter: grayscale(100%) invert(90%) contrast(90%);"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=23.995657753405823,121.60449194185836&z=17&output=embed"
+          title="One Way Coffee Map">
+        </iframe>
+        <!-- Map placeholder shown when iframe is blank -->
+        <div class="map-frame -mt-80 relative pointer-events-none flex-col gap-3" id="map-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-accent/30">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <span class="text-accent/30 tracking-widest text-xs">
+            <span data-lang="zh">地圖即將嵌入</span>
+            <span data-lang="en">Map embed placeholder</span>
+            <span data-lang="jp">地図は近日追加予定</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="py-10 px-6 md:px-12">
+  <!-- Background photo -->
+  <div class="footer-bg">
+    <img src="assets/images/background2.jpg" alt="" aria-hidden="true" />
+  </div>
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-charcoal/88 z-0"></div>
+
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+
+    <div class="flex flex-col items-center md:items-start">
+      <span class="font-serif font-black text-lg text-cream tracking-widest">ONE WAY COFFEE</span>
+      <span class="text-xs text-accent-dim tracking-widest mt-0.5">單行道咖啡 · 花蓮</span>
+    </div>
+
+    <div class="text-center">
+      <p class="text-cream-dim text-xs tracking-wide opacity-50">
+        &copy; 2025 One Way Coffee. All rights reserved.
+      </p>
+      <p class="text-accent/30 text-xs tracking-widest mt-1">
+        花蓮市中山路 123 號
+      </p>
+    </div>
+
+    <!-- Back to top -->
+    <a href="#hero" class="text-xs tracking-widest text-cream-dim hover:text-accent transition-colors border border-cream-dim/20 hover:border-accent/40 px-4 py-2">
+      <span data-lang="zh">回到頂端 ↑</span>
+      <span data-lang="en">Back to top ↑</span>
+      <span data-lang="jp">トップへ ↑</span>
+    </a>
+
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+  // ── Language switcher ──────────────────
+  const body     = document.body;
+  const langBtns = document.querySelectorAll('[data-lang-switch]');
+
+  function setLang(lang) {
+    body.setAttribute('data-active-lang', lang);
+    langBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.langSwitch === lang);
+    });
+    try { localStorage.setItem('owc-lang', lang); } catch(e) {}
+  }
+
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.langSwitch));
+  });
+
+  // Restore saved preference
+  try {
+    const saved = localStorage.getItem('owc-lang');
+    if (saved && ['zh','en','jp'].includes(saved)) setLang(saved);
+  } catch(e) {}
+
+  // ── Navbar scroll effect ───────────────
+  const navbar = document.getElementById('navbar');
+  const onScroll = () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ── Hide map placeholder when real iframe loads ──
+  const mapIframe = document.querySelector('iframe[title="One Way Coffee Map"]');
+  const mapPlaceholder = document.getElementById('map-placeholder');
+  if (mapPlaceholder) mapPlaceholder.style.display = 'none';
+
+  // ── Lightbox ──────────────────────────
+  const lightbox       = document.getElementById('lightbox');
+  const lightboxImg    = document.getElementById('lightbox-img');
+  const lightboxCaption= document.getElementById('lightbox-caption');
+  const lbClose        = document.getElementById('lightbox-close');
+  const lbPrev         = document.getElementById('lightbox-prev');
+  const lbNext         = document.getElementById('lightbox-next');
+
+  // Collect all lightbox-enabled elements
+  const lbItems = Array.from(document.querySelectorAll('[data-lightbox-src]'));
+  let lbCurrent = -1;
+
+  function getCurrentLang() {
+    return body.getAttribute('data-active-lang') || 'zh';
+  }
+
+  function openLightbox(index) {
+    lbCurrent = index;
+    const el = lbItems[index];
+    lightboxImg.src = el.dataset.lightboxSrc;
+    const lang = getCurrentLang();
+    lightboxCaption.textContent = el.dataset[`lightboxCaption${lang.charAt(0).toUpperCase()+lang.slice(1)}`] || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lightboxImg.src = ''; }, 300);
+  }
+
+  function showPrev() {
+    if (lbCurrent > 0) openLightbox(lbCurrent - 1);
+  }
+
+  function showNext() {
+    if (lbCurrent < lbItems.length - 1) openLightbox(lbCurrent + 1);
+  }
+
+  lbItems.forEach((el, i) => {
+    el.addEventListener('click', () => openLightbox(i));
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+  lbNext.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showPrev();
+    if (e.key === 'ArrowRight') showNext();
+  });
+
+  // ── Scroll reveal ──────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>
