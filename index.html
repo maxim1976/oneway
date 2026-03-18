@@ -6,10 +6,10 @@
   <title>One Way Coffee — 單行道咖啡 — 花蓮</title>
   <meta name="description" content="花蓮最有個性的咖啡館 · Hualien's most soulful coffee · 花蓮で一番個性的なカフェ" />
 
-  <!-- Google Fonts: Playfair Display + Noto Serif TC (CJK) + Noto Sans TC -->
+  <!-- Google Fonts: Playfair Display + Noto Serif TC (CJK) + Noto Sans TC + Noto Sans KR -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -72,12 +72,14 @@
     body[data-active-lang="zh"] [data-lang="zh"] { display: block; }
     body[data-active-lang="en"] [data-lang="en"] { display: block; }
     body[data-active-lang="jp"] [data-lang="jp"] { display: block; }
+    body[data-active-lang="ko"] [data-lang="ko"] { display: block; }
 
     /* inline spans */
     span[data-lang] { display: none; }
     body[data-active-lang="zh"] span[data-lang="zh"] { display: inline; }
     body[data-active-lang="en"] span[data-lang="en"] { display: inline; }
     body[data-active-lang="jp"] span[data-lang="jp"] { display: inline; }
+    body[data-active-lang="ko"] span[data-lang="ko"] { display: inline; }
 
     /* ── Navbar ── */
     #navbar {
@@ -544,6 +546,40 @@
 <body data-active-lang="zh">
 
 <!-- ════════════════════════════════════════
+     DEMO DISCLAIMER BANNER
+════════════════════════════════════════ -->
+<div id="demo-banner" style="
+  background: rgba(192,57,43,0.12);
+  border-bottom: 1px solid rgba(192,57,43,0.35);
+  color: #b8b4ac;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-align: center;
+  padding: 0.45rem 1rem;
+  position: relative;
+  z-index: 200;
+">
+  <span style="color:#c0392b; font-weight:500;">僅供展示</span>
+  &nbsp;·&nbsp;
+  本網站為示範用途，所有內容、圖片、價格及資訊均屬虛構，僅作展示之用，不得用於商業目的。
+  &nbsp;·&nbsp;
+  <button onclick="document.getElementById('demo-banner').style.display='none'" style="
+    background: transparent;
+    border: none;
+    color: #b8b4ac;
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 0 0.3rem;
+    opacity: 0.6;
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+  " aria-label="Dismiss">&#x2715;</button>
+</div>
+
+<!-- ════════════════════════════════════════
      LIGHTBOX MODAL
 ════════════════════════════════════════ -->
 <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
@@ -576,21 +612,25 @@
         <span data-lang="zh">菜單</span>
         <span data-lang="en">Menu</span>
         <span data-lang="jp">メニュー</span>
+        <span data-lang="ko">메뉴</span>
       </a>
       <a href="#gallery" class="nav-link">
         <span data-lang="zh">相簿</span>
         <span data-lang="en">Gallery</span>
         <span data-lang="jp">ギャラリー</span>
+        <span data-lang="ko">갤러리</span>
       </a>
       <a href="#about" class="nav-link">
         <span data-lang="zh">關於我們</span>
         <span data-lang="en">About</span>
         <span data-lang="jp">私たちについて</span>
+        <span data-lang="ko">소개</span>
       </a>
       <a href="#contact" class="nav-link">
         <span data-lang="zh">聯絡</span>
         <span data-lang="en">Contact</span>
         <span data-lang="jp">アクセス</span>
+        <span data-lang="ko">오시는 길</span>
       </a>
     </div>
 
@@ -601,6 +641,8 @@
       <button class="lang-btn" data-lang-switch="en">EN</button>
       <span class="text-white/20 text-xs">|</span>
       <button class="lang-btn" data-lang-switch="jp">JP</button>
+      <span class="text-white/20 text-xs">|</span>
+      <button class="lang-btn" data-lang-switch="ko">KO</button>
     </div>
 
   </div>
@@ -669,6 +711,7 @@
       <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="zh">花蓮最有個性的咖啡館</p>
       <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="en">Hualien's most soulful coffee</p>
       <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="jp">花蓮で一番個性的なカフェ</p>
+      <p class="text-base md:text-lg text-cream/60 italic tracking-wide" data-lang="ko">화련에서 가장 개성 있는 카페</p>
     </div>
 
     <!-- CTA -->
@@ -676,6 +719,7 @@
       <span data-lang="zh">探索菜單</span>
       <span data-lang="en">Explore Menu</span>
       <span data-lang="jp">メニューを見る</span>
+      <span data-lang="ko">메뉴 보기</span>
     </a>
 
     <!-- Scroll cue -->
@@ -706,6 +750,7 @@
           <span data-lang="zh">菜單</span>
           <span data-lang="en">Our Menu</span>
           <span data-lang="jp">メニュー</span>
+          <span data-lang="ko">메뉴</span>
         </h2>
         <span class="accent-line mt-3"></span>
       </div>
@@ -713,6 +758,7 @@
         <span data-lang="zh">精選台灣在地豆源與歐洲風味甜點</span>
         <span data-lang="en">Local Taiwanese beans &amp; European-inspired pastries</span>
         <span data-lang="jp">台湾産豆と欧風スイーツのこだわりセレクション</span>
+        <span data-lang="ko">대만 원두와 유럽풍 디저트 셀렉션</span>
       </p>
     </div>
 
@@ -723,6 +769,7 @@
           <span data-lang="zh">義式咖啡</span>
           <span data-lang="en">Espresso Bar</span>
           <span data-lang="jp">エスプレッソ</span>
+          <span data-lang="ko">에스프레소 바</span>
         </span>
         <div class="flex-1 hr-accent"></div>
       </div>
@@ -734,6 +781,7 @@
             <span data-lang="zh">義式濃縮</span>
             <span data-lang="en">Espresso</span>
             <span data-lang="jp">エスプレッソ</span>
+            <span data-lang="ko">에스프레소</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">Single / Double shot</p>
           <p class="menu-price">NT$80 / 100</p>
@@ -745,11 +793,13 @@
             <span data-lang="zh">拿鐵</span>
             <span data-lang="en">Café Latte</span>
             <span data-lang="jp">カフェラテ</span>
+            <span data-lang="ko">카페 라테</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">鮮奶 · 雙份義式</span>
             <span data-lang="en">Fresh milk · double shot</span>
             <span data-lang="jp">フレッシュミルク · ダブルショット</span>
+            <span data-lang="ko">신선한 우유 · 더블샷</span>
           </p>
           <p class="menu-price">NT$150</p>
         </div>
@@ -760,11 +810,13 @@
             <span data-lang="zh">卡布奇諾</span>
             <span data-lang="en">Cappuccino</span>
             <span data-lang="jp">カプチーノ</span>
+            <span data-lang="ko">카푸치노</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">乾式 / 濕式</span>
             <span data-lang="en">Dry / Wet</span>
             <span data-lang="jp">ドライ / ウェット</span>
+            <span data-lang="ko">드라이 / 웨트</span>
           </p>
           <p class="menu-price">NT$140</p>
         </div>
@@ -775,11 +827,13 @@
             <span data-lang="zh">馥列白</span>
             <span data-lang="en">Flat White</span>
             <span data-lang="jp">フラットホワイト</span>
+            <span data-lang="ko">플랫 화이트</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">澳式風格</span>
             <span data-lang="en">Australian style</span>
             <span data-lang="jp">オーストラリアスタイル</span>
+            <span data-lang="ko">호주 스타일</span>
           </p>
           <p class="menu-price">NT$160</p>
         </div>
@@ -794,6 +848,7 @@
           <span data-lang="zh">單品手沖</span>
           <span data-lang="en">Single Origin</span>
           <span data-lang="jp">シングルオリジン</span>
+          <span data-lang="ko">싱글 오리진</span>
         </span>
         <div class="flex-1 hr-accent"></div>
       </div>
@@ -805,11 +860,13 @@
             <span data-lang="zh">衣索比亞 耶加雪菲</span>
             <span data-lang="en">Ethiopia Yirgacheffe</span>
             <span data-lang="jp">エチオピア イルガチェフェ</span>
+            <span data-lang="ko">에티오피아 예르가체페</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">花香 · 茉莉 · 柑橘 · 水洗</span>
             <span data-lang="en">Floral · jasmine · citrus · washed</span>
             <span data-lang="jp">フローラル · ジャスミン · 柑橘 · ウォッシュド</span>
+            <span data-lang="ko">플로럴 · 재스민 · 시트러스 · 워시드</span>
           </p>
           <p class="menu-price">NT$180</p>
         </div>
@@ -820,11 +877,13 @@
             <span data-lang="zh">哥倫比亞 薇拉</span>
             <span data-lang="en">Colombia Huila</span>
             <span data-lang="jp">コロンビア ウイラ</span>
+            <span data-lang="ko">콜롬비아 우일라</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">紅糖 · 黑莓 · 奶油 · 蜜處理</span>
             <span data-lang="en">Brown sugar · blackberry · honey process</span>
             <span data-lang="jp">ブラウンシュガー · ブラックベリー · ハニー</span>
+            <span data-lang="ko">흑설탕 · 블랙베리 · 허니 프로세스</span>
           </p>
           <p class="menu-price">NT$190</p>
         </div>
@@ -835,11 +894,13 @@
             <span data-lang="zh">阿里山 台灣豆</span>
             <span data-lang="en">Alishan Taiwan</span>
             <span data-lang="jp">阿里山 台湾豆</span>
+            <span data-lang="ko">아리산 대만 원두</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">烏龍茶香 · 蜂蜜 · 龍眼</span>
             <span data-lang="en">Oolong · honey · longan · washed</span>
             <span data-lang="jp">烏龍茶香 · 蜂蜜 · リュウガン</span>
+            <span data-lang="ko">우롱 · 꿀 · 용안 · 워시드</span>
           </p>
           <p class="menu-price">NT$220</p>
         </div>
@@ -854,6 +915,7 @@
           <span data-lang="zh">甜點</span>
           <span data-lang="en">Desserts</span>
           <span data-lang="jp">スイーツ</span>
+          <span data-lang="ko">디저트</span>
         </span>
         <div class="flex-1 hr-accent"></div>
       </div>
@@ -865,11 +927,13 @@
             <span data-lang="zh">每日蛋糕</span>
             <span data-lang="en">Cake of the Day</span>
             <span data-lang="jp">本日のケーキ</span>
+            <span data-lang="ko">오늘의 케이크</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">每日手作，依當日為準</span>
             <span data-lang="en">Daily housemade, ask staff</span>
             <span data-lang="jp">毎日手作り、スタッフにお尋ねください</span>
+            <span data-lang="ko">매일 수제, 직원에게 문의</span>
           </p>
           <p class="menu-price">NT$120</p>
         </div>
@@ -880,11 +944,13 @@
             <span data-lang="zh">法式水果塔</span>
             <span data-lang="en">Fruit Tart</span>
             <span data-lang="jp">フルーツタルト</span>
+            <span data-lang="ko">프루트 타르트</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">季節水果 · 卡士達</span>
             <span data-lang="en">Seasonal fruit · custard cream</span>
             <span data-lang="jp">季節のフルーツ · カスタード</span>
+            <span data-lang="ko">제철 과일 · 커스터드 크림</span>
           </p>
           <p class="menu-price">NT$130</p>
         </div>
@@ -895,11 +961,13 @@
             <span data-lang="zh">厚片吐司</span>
             <span data-lang="en">Thick Toast</span>
             <span data-lang="jp">厚切りトースト</span>
+            <span data-lang="ko">두꺼운 토스트</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">奶油 · 海鹽花 · 自製果醬</span>
             <span data-lang="en">Butter · fleur de sel · house jam</span>
             <span data-lang="jp">バター · 岩塩 · 自家製ジャム</span>
+            <span data-lang="ko">버터 · 소금 · 자체 제작 잼</span>
           </p>
           <p class="menu-price">NT$110</p>
         </div>
@@ -910,11 +978,13 @@
             <span data-lang="zh">比利時鬆餅</span>
             <span data-lang="en">Belgian Waffle</span>
             <span data-lang="jp">ベルギーワッフル</span>
+            <span data-lang="ko">벨기에 와플</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">楓糖 · 鮮奶油 · 莓果</span>
             <span data-lang="en">Maple syrup · cream · berries</span>
             <span data-lang="jp">メープルシロップ · クリーム · ベリー</span>
+            <span data-lang="ko">메이플 시럽 · 크림 · 베리</span>
           </p>
           <p class="menu-price">NT$150</p>
         </div>
@@ -929,6 +999,7 @@
           <span data-lang="zh">飲品</span>
           <span data-lang="en">Non-Coffee</span>
           <span data-lang="jp">ソフトドリンク</span>
+          <span data-lang="ko">논커피</span>
         </span>
         <div class="flex-1 hr-accent"></div>
       </div>
@@ -940,6 +1011,7 @@
             <span data-lang="zh">台灣烏龍茶</span>
             <span data-lang="en">Taiwan Oolong</span>
             <span data-lang="jp">台湾烏龍茶</span>
+            <span data-lang="ko">대만 우롱차</span>
           </h3>
           <p class="menu-price">NT$120</p>
         </div>
@@ -950,6 +1022,7 @@
             <span data-lang="zh">現榨檸檬氣泡</span>
             <span data-lang="en">Fresh Lemon Soda</span>
             <span data-lang="jp">フレッシュレモンソーダ</span>
+            <span data-lang="ko">신선한 레몬 소다</span>
           </h3>
           <p class="menu-price">NT$130</p>
         </div>
@@ -960,6 +1033,7 @@
             <span data-lang="zh">比利時熱可可</span>
             <span data-lang="en">Hot Chocolate</span>
             <span data-lang="jp">ホットチョコレート</span>
+            <span data-lang="ko">핫 초콜릿</span>
           </h3>
           <p class="menu-price">NT$150</p>
         </div>
@@ -970,11 +1044,13 @@
             <span data-lang="zh">季節特飲</span>
             <span data-lang="en">Seasonal Special</span>
             <span data-lang="jp">季節のスペシャル</span>
+            <span data-lang="ko">시즌 스페셜</span>
           </h3>
           <p class="text-cream-dim text-xs mb-3">
             <span data-lang="zh">洽詢店員</span>
             <span data-lang="en">Ask our barista</span>
             <span data-lang="jp">スタッフにお尋ねください</span>
+            <span data-lang="ko">바리스타에게 문의</span>
           </p>
           <p class="menu-price">NT$140+</p>
         </div>
@@ -989,6 +1065,7 @@
           <span data-lang="zh">菜單實拍</span>
           <span data-lang="en">Menu Photos</span>
           <span data-lang="jp">メニュー写真</span>
+          <span data-lang="ko">메뉴 사진</span>
         </span>
         <div class="flex-1 hr-accent"></div>
       </div>
@@ -1000,12 +1077,14 @@
           data-lightbox-caption-zh="經典與特選菜單"
           data-lightbox-caption-en="Classic &amp; Special Menu"
           data-lightbox-caption-jp="クラシック＆スペシャルメニュー"
+          data-lightbox-caption-ko="클래식 &amp; 스페셜 메뉴"
         >
           <img src="assets/images/classic_and_special_menu.jpg" alt="Classic and Special Menu" loading="lazy" />
           <div class="menu-photo-label">
             <span data-lang="zh">經典與特選</span>
             <span data-lang="en">Classic &amp; Special</span>
             <span data-lang="jp">クラシック＆スペシャル</span>
+            <span data-lang="ko">클래식 &amp; 스페셜</span>
           </div>
         </div>
 
@@ -1015,12 +1094,14 @@
           data-lightbox-caption-zh="單品手沖菜單"
           data-lightbox-caption-en="Single Origin Menu"
           data-lightbox-caption-jp="シングルオリジンメニュー"
+          data-lightbox-caption-ko="싱글 오리진 메뉴"
         >
           <img src="assets/images/single_origin_menu.jpg" alt="Single Origin Menu" loading="lazy" />
           <div class="menu-photo-label">
             <span data-lang="zh">單品手沖</span>
             <span data-lang="en">Single Origin</span>
             <span data-lang="jp">シングルオリジン</span>
+            <span data-lang="ko">싱글 오리진</span>
           </div>
         </div>
 
@@ -1030,12 +1111,14 @@
           data-lightbox-caption-zh="完整菜單"
           data-lightbox-caption-en="Full Menu"
           data-lightbox-caption-jp="フルメニュー"
+          data-lightbox-caption-ko="전체 메뉴"
         >
           <img src="assets/images/menu.jpg" alt="Full Menu" loading="lazy" />
           <div class="menu-photo-label">
             <span data-lang="zh">完整菜單</span>
             <span data-lang="en">Full Menu</span>
             <span data-lang="jp">フルメニュー</span>
+            <span data-lang="ko">전체 메뉴</span>
           </div>
         </div>
 
@@ -1059,17 +1142,20 @@
           <span data-lang="zh">精品咖啡豆</span>
           <span data-lang="en">Coffee Roaster Packs</span>
           <span data-lang="jp">コーヒーロースターパック</span>
+          <span data-lang="ko">커피 로스터 팩</span>
         </h2>
         <span class="accent-line mb-6"></span>
         <p class="text-cream/70 text-sm leading-relaxed mb-6">
           <span data-lang="zh">精心烘焙的單一產地咖啡豆，帶回家延續那杯咖啡的美好時光。</span>
           <span data-lang="en">Carefully roasted single-origin beans — bring home the flavours you love.</span>
           <span data-lang="jp">丁寧に焙煎したシングルオリジンの豆をご自宅でも。</span>
+          <span data-lang="ko">정성껏 로스팅한 싱글 오리진 원두를 집에서도 즐겨보세요.</span>
         </p>
         <a href="#contact" class="inline-block border border-accent/60 text-accent text-xs tracking-widest3 uppercase px-6 py-2.5 hover:bg-accent hover:text-charcoal transition-all duration-300">
           <span data-lang="zh">洽詢購買</span>
           <span data-lang="en">Enquire</span>
           <span data-lang="jp">お問い合わせ</span>
+          <span data-lang="ko">문의하기</span>
         </a>
       </div>
     </div>
@@ -1090,6 +1176,7 @@
         <span data-lang="zh">空間相簿</span>
         <span data-lang="en">Gallery</span>
         <span data-lang="jp">ギャラリー</span>
+        <span data-lang="ko">갤러리</span>
       </h2>
       <span class="accent-line mt-3"></span>
     </div>
@@ -1104,6 +1191,7 @@
         data-lightbox-caption-zh="拿鐵"
         data-lightbox-caption-en="Latte"
         data-lightbox-caption-jp="ラテ"
+        data-lightbox-caption-ko="라테"
       >
         <img src="assets/images/latte.jpg" alt="Latte" loading="lazy" />
         <div class="gallery-overlay">
@@ -1111,6 +1199,7 @@
             <span data-lang="zh">拿鐵</span>
             <span data-lang="en">Latte</span>
             <span data-lang="jp">ラテ</span>
+            <span data-lang="ko">라테</span>
           </span>
         </div>
       </div>
@@ -1122,6 +1211,7 @@
         data-lightbox-caption-zh="抹茶巴斯克"
         data-lightbox-caption-en="Matcha Basque"
         data-lightbox-caption-jp="抹茶バスク"
+        data-lightbox-caption-ko="말차 바스크"
       >
         <img src="assets/images/matcha_basque.jpg" alt="Matcha Basque" loading="lazy" />
         <div class="gallery-overlay">
@@ -1129,6 +1219,7 @@
             <span data-lang="zh">抹茶巴斯克</span>
             <span data-lang="en">Matcha Basque</span>
             <span data-lang="jp">抹茶バスク</span>
+            <span data-lang="ko">말차 바스크</span>
           </span>
         </div>
       </div>
@@ -1140,6 +1231,7 @@
         data-lightbox-caption-zh="草莓蛋糕"
         data-lightbox-caption-en="Strawberry Cake"
         data-lightbox-caption-jp="ストロベリーケーキ"
+        data-lightbox-caption-ko="딸기 케이크"
       >
         <img src="assets/images/strawberry_cake.jpg" alt="Strawberry Cake" loading="lazy" />
         <div class="gallery-overlay">
@@ -1147,6 +1239,7 @@
             <span data-lang="zh">草莓蛋糕</span>
             <span data-lang="en">Strawberry Cake</span>
             <span data-lang="jp">ストロベリーケーキ</span>
+            <span data-lang="ko">딸기 케이크</span>
           </span>
         </div>
       </div>
@@ -1158,6 +1251,7 @@
         data-lightbox-caption-zh="起司蛋糕"
         data-lightbox-caption-en="Cheesecake"
         data-lightbox-caption-jp="チーズケーキ"
+        data-lightbox-caption-ko="치즈케이크"
       >
         <img src="assets/images/cheesecake.jpg" alt="Cheesecake" loading="lazy" />
         <div class="gallery-overlay">
@@ -1165,6 +1259,7 @@
             <span data-lang="zh">起司蛋糕</span>
             <span data-lang="en">Cheesecake</span>
             <span data-lang="jp">チーズケーキ</span>
+            <span data-lang="ko">치즈케이크</span>
           </span>
         </div>
       </div>
@@ -1176,6 +1271,7 @@
         data-lightbox-caption-zh="藍莓起司蛋糕"
         data-lightbox-caption-en="Blueberry Cheesecake"
         data-lightbox-caption-jp="ブルーベリーチーズケーキ"
+        data-lightbox-caption-ko="블루베리 치즈케이크"
       >
         <img src="assets/images/blueberry_cheesecake.jpg" alt="Blueberry Cheesecake" loading="lazy" />
         <div class="gallery-overlay">
@@ -1183,6 +1279,7 @@
             <span data-lang="zh">藍莓起司蛋糕</span>
             <span data-lang="en">Blueberry Cheesecake</span>
             <span data-lang="jp">ブルーベリーチーズケーキ</span>
+            <span data-lang="ko">블루베리 치즈케이크</span>
           </span>
         </div>
       </div>
@@ -1194,6 +1291,7 @@
         data-lightbox-caption-zh="檸檬塔"
         data-lightbox-caption-en="Lemon Tart"
         data-lightbox-caption-jp="レモンタルト"
+        data-lightbox-caption-ko="레몬 타르트"
       >
         <img src="assets/images/lemon_tart.jpg" alt="Lemon Tart" loading="lazy" />
         <div class="gallery-overlay">
@@ -1201,6 +1299,7 @@
             <span data-lang="zh">檸檬塔</span>
             <span data-lang="en">Lemon Tart</span>
             <span data-lang="jp">レモンタルト</span>
+            <span data-lang="ko">레몬 타르트</span>
           </span>
         </div>
       </div>
@@ -1212,6 +1311,7 @@
         data-lightbox-caption-zh="巧克力"
         data-lightbox-caption-en="Chocolate"
         data-lightbox-caption-jp="チョコレート"
+        data-lightbox-caption-ko="초콜릿"
       >
         <img src="assets/images/chocolate.jpg" alt="Chocolate" loading="lazy" />
         <div class="gallery-overlay">
@@ -1219,6 +1319,7 @@
             <span data-lang="zh">巧克力</span>
             <span data-lang="en">Chocolate</span>
             <span data-lang="jp">チョコレート</span>
+            <span data-lang="ko">초콜릿</span>
           </span>
         </div>
       </div>
@@ -1230,6 +1331,7 @@
         data-lightbox-caption-zh="肉桂捲"
         data-lightbox-caption-en="Cinnamon Roll"
         data-lightbox-caption-jp="シナモンロール"
+        data-lightbox-caption-ko="시나몬 롤"
       >
         <img src="assets/images/cinnamon_roll.jpg" alt="Cinnamon Roll" loading="lazy" />
         <div class="gallery-overlay">
@@ -1237,6 +1339,7 @@
             <span data-lang="zh">肉桂捲</span>
             <span data-lang="en">Cinnamon Roll</span>
             <span data-lang="jp">シナモンロール</span>
+            <span data-lang="ko">시나몬 롤</span>
           </span>
         </div>
       </div>
@@ -1248,6 +1351,7 @@
         data-lightbox-caption-zh="奶霜咖啡"
         data-lightbox-caption-en="Creamy Coffee"
         data-lightbox-caption-jp="クリーミーコーヒー"
+        data-lightbox-caption-ko="크리미 커피"
       >
         <img src="assets/images/creamy.jpg" alt="Creamy Coffee" loading="lazy" />
         <div class="gallery-overlay">
@@ -1255,6 +1359,7 @@
             <span data-lang="zh">奶霜咖啡</span>
             <span data-lang="en">Creamy Coffee</span>
             <span data-lang="jp">クリーミーコーヒー</span>
+            <span data-lang="ko">크리미 커피</span>
           </span>
         </div>
       </div>
@@ -1266,6 +1371,7 @@
         data-lightbox-caption-zh="拿鐵特寫"
         data-lightbox-caption-en="Latte Close-up"
         data-lightbox-caption-jp="ラテ（クローズアップ）"
+        data-lightbox-caption-ko="라테 클로즈업"
       >
         <img src="assets/images/latte2.jpg" alt="Latte Close-up" loading="lazy" />
         <div class="gallery-overlay">
@@ -1273,6 +1379,7 @@
             <span data-lang="zh">拿鐵特寫</span>
             <span data-lang="en">Latte Close-up</span>
             <span data-lang="jp">ラテ（クローズアップ）</span>
+            <span data-lang="ko">라테 클로즈업</span>
           </span>
         </div>
       </div>
@@ -1284,6 +1391,7 @@
         data-lightbox-caption-zh="早午餐"
         data-lightbox-caption-en="Brunch"
         data-lightbox-caption-jp="ブランチ"
+        data-lightbox-caption-ko="브런치"
       >
         <img src="assets/images/brunch.jpg" alt="Brunch" loading="lazy" />
         <div class="gallery-overlay">
@@ -1291,6 +1399,7 @@
             <span data-lang="zh">早午餐</span>
             <span data-lang="en">Brunch</span>
             <span data-lang="jp">ブランチ</span>
+            <span data-lang="ko">브런치</span>
           </span>
         </div>
       </div>
@@ -1302,6 +1411,7 @@
         data-lightbox-caption-zh="咖啡時光"
         data-lightbox-caption-en="Coffee Time"
         data-lightbox-caption-jp="コーヒータイム"
+        data-lightbox-caption-ko="커피 타임"
       >
         <img src="assets/images/coffee_time.jpg" alt="Coffee Time" loading="lazy" />
         <div class="gallery-overlay">
@@ -1309,6 +1419,7 @@
             <span data-lang="zh">咖啡時光</span>
             <span data-lang="en">Coffee Time</span>
             <span data-lang="jp">コーヒータイム</span>
+            <span data-lang="ko">커피 타임</span>
           </span>
         </div>
       </div>
@@ -1320,6 +1431,7 @@
       <span data-lang="zh">— 點擊照片放大查看 —</span>
       <span data-lang="en">— Click any photo to enlarge —</span>
       <span data-lang="jp">— 写真をクリックして拡大 —</span>
+      <span data-lang="ko">— 사진을 클릭하여 크게 보기 —</span>
     </p>
 
   </div>
@@ -1344,6 +1456,7 @@
           <span data-lang="zh">關於我們</span>
           <span data-lang="en">Our Story</span>
           <span data-lang="jp">私たちについて</span>
+          <span data-lang="ko">우리 이야기</span>
         </h2>
         <span class="accent-line mb-8"></span>
 
@@ -1357,6 +1470,9 @@
           <p class="text-cream text-base leading-relaxed" data-lang="jp">
             花蓮駅から徒歩わずか5分の欧風フォトジェニックカフェ。こだわりのスイーツとドリンク、そして4匹の看板猫があなたのティータイムをお迎えします。
           </p>
+          <p class="text-cream text-base leading-relaxed" data-lang="ko">
+            화련역에서 도보 5분 거리의 유럽풍 카페. 정성껏 만든 음료와 디저트, 그리고 4마리의 고양이가 여러분의 티타임을 함께합니다.
+          </p>
         </div>
 
         <!-- Feature pills -->
@@ -1365,21 +1481,25 @@
             <span data-lang="zh">🐱 四隻店貓</span>
             <span data-lang="en">🐱 4 House Cats</span>
             <span data-lang="jp">🐱 看板猫 4匹</span>
+            <span data-lang="ko">🐱 고양이 4마리</span>
           </span>
           <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
             <span data-lang="zh">📍 車站步行5分鐘</span>
             <span data-lang="en">📍 5 min from Station</span>
             <span data-lang="jp">📍 駅から徒歩5分</span>
+            <span data-lang="ko">📍 역에서 도보 5분</span>
           </span>
           <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
             <span data-lang="zh">☕ 精品咖啡</span>
             <span data-lang="en">☕ Specialty Coffee</span>
             <span data-lang="jp">☕ スペシャルティコーヒー</span>
+            <span data-lang="ko">☕ 스페셜티 커피</span>
           </span>
           <span class="text-xs border border-accent/30 text-accent px-3 py-1 tracking-wide">
             <span data-lang="zh">🌿 歐風氛圍</span>
             <span data-lang="en">🌿 European Ambience</span>
             <span data-lang="jp">🌿 欧風インテリア</span>
+            <span data-lang="ko">🌿 유럽풍 인테리어</span>
           </span>
         </div>
       </div>
@@ -1395,6 +1515,7 @@
             data-lightbox-caption-zh="店內空間"
             data-lightbox-caption-en="Interior"
             data-lightbox-caption-jp="店内"
+            data-lightbox-caption-ko="내부 공간"
             style="cursor:pointer;"
           >
             <img src="assets/images/interior.jpg" alt="One Way Coffee Interior" loading="lazy" />
@@ -1407,6 +1528,7 @@
             data-lightbox-caption-zh="門面"
             data-lightbox-caption-en="Front Window"
             data-lightbox-caption-jp="フロント"
+            data-lightbox-caption-ko="정면"
             style="cursor:pointer;"
           >
             <img src="assets/images/front_window.jpg" alt="One Way Coffee Front Window" loading="lazy" />
@@ -1433,6 +1555,7 @@
         <span data-lang="zh">找到我們</span>
         <span data-lang="en">Find Us</span>
         <span data-lang="jp">アクセス</span>
+        <span data-lang="ko">찾아오시는 길</span>
       </h2>
       <span class="accent-line mt-3"></span>
     </div>
@@ -1447,11 +1570,13 @@
             <span data-lang="zh">地址</span>
             <span data-lang="en">Address</span>
             <span data-lang="jp">住所</span>
+            <span data-lang="ko">주소</span>
           </p>
           <p class="text-cream text-base">
             <span data-lang="zh">970 花蓮市中山路 123 號</span>
             <span data-lang="en">123 Zhongshan Road, Hualien City 970, Taiwan</span>
             <span data-lang="jp">台湾花蓮市中山路123号 〒970</span>
+            <span data-lang="ko">대만 화련시 중산로 123호 970</span>
           </p>
         </div>
 
@@ -1462,6 +1587,7 @@
             <span data-lang="zh">營業時間</span>
             <span data-lang="en">Opening Hours</span>
             <span data-lang="jp">営業時間</span>
+            <span data-lang="ko">영업 시간</span>
           </p>
           <div class="space-y-2 text-sm">
             <div class="flex justify-between items-center">
@@ -1469,6 +1595,7 @@
                 <span data-lang="zh">週一 — 週五</span>
                 <span data-lang="en">Mon — Fri</span>
                 <span data-lang="jp">月 — 金</span>
+                <span data-lang="ko">월 — 금</span>
               </span>
               <span class="text-cream font-medium tracking-wide">10:00 — 20:00</span>
             </div>
@@ -1478,6 +1605,7 @@
                 <span data-lang="zh">週六 — 週日</span>
                 <span data-lang="en">Sat — Sun</span>
                 <span data-lang="jp">土 — 日</span>
+                <span data-lang="ko">토 — 일</span>
               </span>
               <span class="text-cream font-medium tracking-wide">09:00 — 21:00</span>
             </div>
@@ -1492,6 +1620,7 @@
               <span data-lang="zh">電話</span>
               <span data-lang="en">Phone</span>
               <span data-lang="jp">電話</span>
+              <span data-lang="ko">전화</span>
             </p>
             <a href="tel:+88630000000" class="text-cream hover:text-accent transition-colors text-base">+886-3-000-0000</a>
           </div>
@@ -1530,6 +1659,7 @@
             <span data-lang="zh">地圖即將嵌入</span>
             <span data-lang="en">Map embed placeholder</span>
             <span data-lang="jp">地図は近日追加予定</span>
+            <span data-lang="ko">지도 삽입 예정</span>
           </span>
         </div>
       </div>
@@ -1564,6 +1694,9 @@
       <p class="text-accent/30 text-xs tracking-widest mt-1">
         花蓮市中山路 123 號
       </p>
+      <p class="text-xs tracking-wide mt-2" style="color:rgba(192,57,43,0.45); font-size:0.6rem; letter-spacing:0.12em;">
+        僅供展示 &mdash; 本網站所有內容均屬虛構，僅作示範之用，不得用於商業目的。
+      </p>
     </div>
 
     <!-- Back to top -->
@@ -1571,6 +1704,7 @@
       <span data-lang="zh">回到頂端 ↑</span>
       <span data-lang="en">Back to top ↑</span>
       <span data-lang="jp">トップへ ↑</span>
+      <span data-lang="ko">맨 위로 ↑</span>
     </a>
 
   </div>
@@ -1600,7 +1734,7 @@
   // Restore saved preference
   try {
     const saved = localStorage.getItem('owc-lang');
-    if (saved && ['zh','en','jp'].includes(saved)) setLang(saved);
+    if (saved && ['zh','en','jp','ko'].includes(saved)) setLang(saved);
   } catch(e) {}
 
   // ── Navbar scroll effect ───────────────
