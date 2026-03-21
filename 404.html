@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>哎呀！/ Oops! / あらら！</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Noto+Sans+TC:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFD93D;
+      --coral: #FF6B6B;
+      --mint: #6BCB77;
+      --blue: #4D96FF;
+      --purple: #C77DFF;
+      --dark: #1a1a2e;
+      --white: #FFFDF7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--dark);
+      color: var(--white);
+      font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating blobs */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; animation-delay: 0s; }
+    .blob-2 { width: 350px; height: 350px; background: var(--blue); bottom: -80px; right: -80px; animation-delay: -3s; }
+    .blob-3 { width: 300px; height: 300px; background: var(--purple); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 30px) scale(0.95); }
+    }
+
+    /* Confetti dots */
+    .dots {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Main card */
+    .card {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 3rem 2.5rem;
+      max-width: 580px;
+      width: 90%;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 32px;
+      backdrop-filter: blur(20px);
+      animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.7) translateY(40px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .emoji {
+      font-size: 5rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      animation: wiggle 1.5s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-8deg) scale(1); }
+      50% { transform: rotate(8deg) scale(1.1); }
+    }
+
+    .code-404 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(5rem, 18vw, 9rem);
+      line-height: 1;
+      background: linear-gradient(135deg, var(--yellow), var(--coral), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+    }
+
+    .lang-block {
+      margin: 1rem 0;
+    }
+
+    .main-text {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--yellow);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .sub-text {
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--mint), var(--blue));
+      border-radius: 2px;
+      margin: 1.2rem auto;
+    }
+
+    .lang-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .lang-item {
+      text-align: center;
+    }
+
+    .lang-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.35);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .lang-oops {
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: block;
+    }
+    .lang-oops.zh { color: var(--coral); }
+    .lang-oops.en { color: var(--mint); }
+    .lang-oops.ja { color: var(--blue); }
+
+    .tag {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.5rem 1.5rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+    }
+
+    /* Reload countdown */
+    .reload-box {
+      margin-top: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .reload-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1px;
+    }
+
+    .reload-ring {
+      position: relative;
+      width: 56px;
+      height: 56px;
+    }
+
+    .reload-ring svg {
+      transform: rotate(-90deg);
+      width: 56px;
+      height: 56px;
+    }
+
+    .reload-ring circle {
+      fill: none;
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+
+    .ring-track {
+      stroke: rgba(255,255,255,0.1);
+    }
+
+    .ring-fill {
+      stroke: var(--yellow);
+      stroke-dasharray: 138.23; /* 2π × 22 */
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.5s;
+    }
+
+    .ring-number {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--yellow);
+    }
+
+    .reload-texts {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.7;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="dots" id="dots"></div>
+
+  <div class="card">
+    <span class="emoji">🙈</span>
+    <div class="code-404">404</div>
+
+    <div class="lang-block">
+      <span class="main-text">哎呀！這個頁面不見了</span>
+      <span class="sub-text">此示範網站目前暫停提供服務。<br>感謝您的瀏覽！</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="lang-block">
+      <span class="main-text" style="color: var(--mint);">Oops! Page not found</span>
+      <span class="sub-text">This demo site is currently offline.<br>Thanks for stopping by!</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="lang-block">
+      <span class="main-text" style="color: var(--blue);">あらら！ページが見つかりません</span>
+      <span class="sub-text">このデモサイトは現在オフラインです。<br>ご訪問ありがとうございました！</span>
+    </div>
+
+    <div class="lang-row">
+      <div class="lang-item">
+        <span class="lang-label">繁體中文</span>
+        <span class="lang-oops zh">哎呀 😅</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-label">English</span>
+        <span class="lang-oops en">Oops 🤷</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-label">日本語</span>
+        <span class="lang-oops ja">あらら 🙏</span>
+      </div>
+    </div>
+
+    <!-- Auto-reload countdown -->
+    <div class="reload-box">
+      <span class="reload-label">自動重新整理 · Auto reload · 自動リロード</span>
+      <div class="reload-ring">
+        <svg viewBox="0 0 56 56">
+          <circle class="ring-track" cx="28" cy="28" r="22"/>
+          <circle class="ring-fill" id="ringFill" cx="28" cy="28" r="22"/>
+        </svg>
+        <div class="ring-number" id="countdown">30</div>
+      </div>
+      <div class="reload-texts" id="reloadTexts">
+        30 秒後自動重新整理&nbsp;·&nbsp;Reloading in 30s&nbsp;·&nbsp;30秒後リロード
+      </div>
+    </div>
+
+    <div class="tag">demo site · 示範網站 · デモサイト</div>
+  </div>
+
+  <script>
+    // Generate confetti dots
+    const colors = ['#FFD93D','#FF6B6B','#6BCB77','#4D96FF','#C77DFF','#FF9F1C'];
+    const dotsEl = document.getElementById('dots');
+    for (let i = 0; i < 30; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.cssText = `
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        width: ${Math.random() * 10 + 5}px;
+        height: ${Math.random() * 10 + 5}px;
+        animation-duration: ${Math.random() * 8 + 6}s;
+        animation-delay: ${Math.random() * -10}s;
+        opacity: ${Math.random() * 0.5 + 0.2};
+      `;
+      dotsEl.appendChild(dot);
+    }
+
+    // Auto-reload countdown
+    const TOTAL = 30;
+    const CIRCUMFERENCE = 2 * Math.PI * 22; // ≈ 138.23
+    const ringFill = document.getElementById('ringFill');
+    const countdownEl = document.getElementById('countdown');
+    const reloadTexts = document.getElementById('reloadTexts');
+
+    ringFill.style.strokeDasharray = CIRCUMFERENCE;
+    ringFill.style.strokeDashoffset = 0;
+
+    let remaining = TOTAL;
+
+    function tick() {
+      remaining--;
+
+      if (remaining <= 0) {
+        location.reload();
+        return;
+      }
+
+      // Ring progress (drains from full to empty)
+      const offset = CIRCUMFERENCE * (1 - remaining / TOTAL);
+      ringFill.style.strokeDashoffset = offset;
+
+      // Color shifts from yellow → coral as time runs out
+      const pct = remaining / TOTAL;
+      ringFill.style.stroke = pct > 0.4 ? 'var(--yellow)' : 'var(--coral)';
+      countdownEl.style.color = pct > 0.4 ? 'var(--yellow)' : 'var(--coral)';
+
+      countdownEl.textContent = remaining;
+      reloadTexts.textContent = `${remaining} 秒後自動重新整理 · Reloading in ${remaining}s · ${remaining}秒後リロード`;
+    }
+
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
